@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RPG Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <div class="player-info" id="player-info">
+            <h2>Player Info</h2>
+            <div id="player-details"></div>
+        </div>
+        <div class="game-main">
+            <div class="narrator-window">
+                <h2>Narrator</h2>
+                <div id="scenario">{{ scenario }}</div>
+            </div>
+            <div class="chat-window">
+                <h2>Command</h2>
+                <div id="response"></div>
+                <form id="command-form">
+                    <input type="text" id="command-input" placeholder="Enter your command">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
