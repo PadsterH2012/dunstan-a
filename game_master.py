@@ -1,15 +1,7 @@
-import random
-from models import Rule
+from ai_utils import generate_scenario, process_command
 
-def generate_scenario():
-    scenarios = [
-        "You find yourself in a dark forest. What do you do?",
-        "You enter a bustling town. Where do you go?",
-        "A dragon blocks your path. How do you proceed?"
-    ]
-    return random.choice(scenarios)
+def get_initial_scenario():
+    return generate_scenario()
 
-def process_command(command):
-    # Placeholder for command processing logic
-    response = f"You decided to: {command}"
-    return response
+def handle_user_command(command):
+    return process_command(command)

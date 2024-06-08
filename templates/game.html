@@ -7,23 +7,30 @@
 </head>
 <body>
     <div class="game-container">
-        <div class="player-info" id="player-info">
-            <h2>Player Info</h2>
-            <div id="player-details"></div>
+        <div class="game-type">
+            <h2 id="current-game-type">{{ game_type }}</h2>
         </div>
-        <div class="game-main">
-            <div class="narrator-window">
-                <h2>Narrator</h2>
-                <div id="scenario">{{ scenario }}</div>
-            </div>
-            <div class="chat-window">
-                <h2>Command</h2>
+        <div class="narrator-window">
+            <h2>Narrator</h2>
+            <div id="narrator-content" class="narrator-text"></div>
+        </div>
+        <div class="interaction-container">
+            <div class="player-interaction">
+                <h2>Player Interaction</h2>
                 <div id="response"></div>
-                <form id="command-form">
-                    <input type="text" id="command-input" placeholder="Enter your command">
-                    <button type="submit">Submit</button>
-                </form>
             </div>
+            <div class="player-info">
+                <h2>Player Character Info</h2>
+                <div id="player-details"></div>
+            </div>
+        </div>
+        <div class="command-container">
+            <input type="text" id="command-input" placeholder="Please enter command here ...">
+            <button id="send-command">Send</button>
+        </div>
+        <div class="tbd-window">
+            <h2>TBD Window</h2>
+            <div id="tbd-content"></div>
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>

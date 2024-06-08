@@ -11,8 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('player-details').innerHTML = playerDetails;
         });
 
-    document.getElementById('command-form').addEventListener('submit', function(event) {
-        event.preventDefault();
+    // Fetch the initial scenario after the page has loaded
+    fetch('/initial_scenario')
+        .then(response => response.json())
+        .then(data => {
+            console.log("Scenario:", data);  // Debug output
+            document.getElementById('narrator-content').innerHTML = data.scenario_text;
+            document.getElementById('response').innerHTML = '<h3>Options</h3>' + data.options;
+        });
+
+    document.getElementById('send-command').addEventListener('click', function() {
         const command = document.getElementById('command-input').value;
         fetch('/command', {
             method: 'POST',
@@ -22,9 +30,20 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             const responseElement = document.createElement('div');
-            responseElement.innerText = data.response;
+            responseElement.innerHTML = data.response;
             document.getElementById('response').appendChild(responseElement);
             document.getElementById('command-input').value = '';
+            document.getElementById('response').scrollTop = document.getElementById('response').scrollHeight;
+
+            fetch('/update_narrator', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command: data.response })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('narrator-content').innerHTML = data.narrator_update;
+            });
         });
     });
 });

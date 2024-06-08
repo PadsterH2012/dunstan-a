@@ -2,17 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload RPG Rulebook</title>
+    <title>Upload PDF</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Upload RPG Rulebook</h1>
-        <form action="/uploader" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>
-            <input type="submit" value="Upload">
+        <h1>Upload PDF</h1>
+        <form id="upload-form" enctype="multipart/form-data">
+            <input type="file" name="file" id="file-input" hidden>
+            <label for="file-input" id="file-label">Choose File or Drag & Drop Here</label>
+            <button type="submit">Upload</button>
         </form>
-        <a href="/game" class="start-game">Start Game</a>
+
+        <h2>Uploaded PDFs</h2>
+        <ul id="file-list">
+            {% for file in uploaded_files %}
+                <li>{{ file.filename }} - Uploaded on {{ file.upload_date }}</li>
+            {% endfor %}
+        </ul>
+
+        <a class="start-game" href="{{ url_for('game') }}">Start Game</a>
     </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

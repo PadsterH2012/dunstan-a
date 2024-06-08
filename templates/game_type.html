@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ game_type.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>{{ game_type.name }}</h1>
+    
+    <form action="{{ url_for('upload_file', game_type_id=game_type.id) }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit">Upload PDF</button>
+    </form>
+
+    <h2>Uploaded PDFs</h2>
+    <ul>
+        {% for file in uploaded_files %}
+        <li>
+            {{ file.filename }} - Uploaded on {{ file.uploaded_on }} 
+            {% if file.processed %}
+                (Processed)
+            {% else %}
+                <form action="{{ url_for('process_file', file_id=file.id) }}" method="post" style="display:inline;">
+                    <button type="submit">Process</button>
+                </form>
+            {% endif %}
+            <a href="{{ url_for('delete_file', id=file.id, game_type_id=game_type.id) }}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Generated Rules</h2>
+    <ul>
+        {% for rule in rules %}
+        <li>{{ rule.content }}</li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{{ url_for('home') }}">Back to Main Page</a> 
+    <a href="{{ url_for('start_game', game_type_id=game_type.id) }}">Start Game</a>
+</body>
+</html>
